@@ -1,5 +1,5 @@
 const CommandConfig = {
-  Namespace: "espryra:",
+  Namespace: "bogie:",
 };
 
 export default CommandConfig;

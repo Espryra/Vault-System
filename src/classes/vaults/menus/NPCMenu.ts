@@ -1,0 +1,84 @@
+import {
+  Player,
+  system,
+  world,
+  type PlayerInteractWithEntityBeforeEvent,
+} from "@minecraft/server";
+import { ActionFormData } from "@minecraft/server-ui";
+import VaultConfig from "../../../lib/vaults";
+import { VaultDatabase } from "../constants";
+
+export default class VaultNPCMenu {
+  private constructor() {}
+
+  public static async Init(): Promise<void> {
+    world.beforeEvents.playerInteractWithEntity.subscribe((event) =>
+      VaultNPCMenu.OnInteract(event),
+    );
+  }
+
+  private static OnInteract(event: PlayerInteractWithEntityBeforeEvent): void {
+    const { player, target } = event;
+
+    if (!target.hasTag(VaultConfig.VaultNPCTag)) {
+      return;
+    }
+
+    event.cancel = true;
+
+    system.run(() => VaultNPCMenu.MainMenu(player));
+  }
+
+  private static MainMenu(player: Player): void {
+    const vault = VaultDatabase.Get(player.id);
+
+    if (!vault) {
+      VaultNPCMenu.CreateMenu(player);
+      return;
+    }
+  }
+
+  private static async CreateMenu(player: Player): Promise<void> {
+    const form = await new ActionFormData()
+      .title("Creation Menu")
+      .body(
+        // `Hello, ${player.name}! It seems you do not own a vault as of right now, would you like to purchase one?\n\nCost: $${VaultConfig.VaultPrice.toLocaleString()}\n\nWould you like to continue?\n`,
+        [
+          `Hello, ${player.name}!\n`,
+          `It seems you do not own a vault as of right now, would you like to purchase one?\n`,
+          `The cost of the vault is $${VaultConfig.VaultPrice.toLocaleString()}\n`,
+          `Would you like to continue?`,
+        ].join("\n"),
+      )
+      .button(`Continue\n[ Purchase Vault ]`)
+      .button(`Cancel\n[ Exit ]`)
+      .show(player);
+
+    switch (form.selection) {
+      case undefined:
+      case 1:
+        break;
+      case 0:
+        VaultNPCMenu.PurchaseVault(player);
+        break;
+    }
+  }
+  private static async PurchaseVault(player: Player): Promise<void> {
+    const balance = player.getBalance();
+
+    if (balance < VaultConfig.VaultPrice) {
+      player.sendError("Insufficient funds.");
+      return;
+    }
+
+    player.removeBalance(VaultConfig.VaultPrice);
+
+    VaultDatabase.Set(player.id, {
+      upgrade_level: 0,
+      enabled: false,
+      items: {},
+    });
+
+    player.sendSuccess("You have successfully purchased a vault!");
+  }
+}
