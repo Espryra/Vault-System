@@ -6,7 +6,11 @@ import VaultMenu from "./menus/menu";
 
 export default class VaultCommands {
   public static async Init(): Promise<void> {
-    CommandHandler.RegisterCommand(new Command("vault", VaultCommands.Vault));
+    CommandHandler.RegisterCommand(
+      new Command("vault", VaultCommands.Vault).SetDescription(
+        "Open the vault menu.",
+      ),
+    );
     CommandHandler.RegisterCommand(
       new Command("togglevault", VaultCommands.ToggleVault).SetDescription(
         "Toggle your vault from collecting items.",

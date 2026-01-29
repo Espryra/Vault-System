@@ -42,7 +42,6 @@ export default class VaultNPCMenu {
     const form = await new ActionFormData()
       .title("Creation Menu")
       .body(
-        // `Hello, ${player.name}! It seems you do not own a vault as of right now, would you like to purchase one?\n\nCost: $${VaultConfig.VaultPrice.toLocaleString()}\n\nWould you like to continue?\n`,
         [
           `Hello, ${player.name}!\n`,
           `It seems you do not own a vault as of right now, would you like to purchase one?\n`,

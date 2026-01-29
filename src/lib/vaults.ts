@@ -18,12 +18,14 @@ const VaultConfig = {
     "minecraft:dragon_egg",
     "minecraft:mob_spawner",
     "minecraft:trial_spawner",
+    "minecraft:budding_amethyst",
+    "minecraft:reinforced_deepslate",
   ], // Either full typeIds, or just wildcards.
   VaultNPCTag: "vault",
   VaultPrice: 50,
   VaultLevels: [
     {
-      limit: 2880,
+      limit: 3072,
       cost: 0,
     },
     {

@@ -1,7 +1,7 @@
 import type { Player } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import VaultConfig from "../../../lib/vaults";
 import { VaultDatabase } from "../constants";
+import VaultUtils from "../utils";
 
 export default class VaultMenu {
   private constructor() {}
@@ -14,8 +14,8 @@ export default class VaultMenu {
       return;
     }
 
-    const total = Object.values(vault.items).reduce((a, b) => a + b, 0);
-    const level = VaultConfig.VaultLevels[vault.upgrade_level]!;
+    const total = VaultUtils.GetTotal(vault);
+    const level = VaultUtils.GetLevel(vault);
     const form = await new ActionFormData()
       .title("Vault Menu")
       .body(
