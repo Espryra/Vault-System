@@ -7,6 +7,8 @@ import { VaultDatabase } from "./constants";
 import VaultUtils from "./utils";
 
 export default class VaultBreaking {
+  private constructor() {}
+
   public static async Init(): Promise<void> {
     world.afterEvents.playerBreakBlock.subscribe((event) =>
       VaultBreaking.OnBreak(event),
@@ -33,7 +35,7 @@ export default class VaultBreaking {
     }
 
     const entity = dimension
-      .getEntities({ location: block.location, maxDistance: 1.5 })
+      .getEntities({ location: block.location, maxDistance: 2, closest: 1 })
       .find((entity) => entity.typeId === "minecraft:item");
 
     if (!entity) {
