@@ -5,6 +5,8 @@ import { VaultDatabase } from "./constants";
 import VaultMenu from "./menus/menu";
 
 export default class VaultCommands {
+  private constructor() {}
+
   public static async Init(): Promise<void> {
     CommandHandler.RegisterCommand(
       new Command("vault", VaultCommands.Vault).SetDescription(
@@ -16,9 +18,16 @@ export default class VaultCommands {
         "Toggle your vault from collecting items.",
       ),
     );
+
+    // Debugging
     CommandHandler.RegisterCommand(
       new Command("vaultstatus", VaultCommands.VaultStatus).SetDescription(
         "Get the status of your vault.",
+      ),
+    );
+    CommandHandler.RegisterCommand(
+      new Command("clearvault", VaultCommands.ClearVault).SetDescription(
+        "Clear your vault.",
       ),
     );
   }
@@ -54,5 +63,18 @@ export default class VaultCommands {
     }
 
     player.sendMessage(JSON.stringify(vault, null, 2));
+  }
+  private static ClearVault(player: Player): void {
+    const vault = VaultDatabase.Get(player.id);
+
+    if (!vault) {
+      player.sendError("You do not own a vault!");
+      return;
+    }
+
+    vault.items = {};
+    VaultDatabase.Set(player.id, vault);
+
+    player.sendSuccess("Vault has been cleared!");
   }
 }

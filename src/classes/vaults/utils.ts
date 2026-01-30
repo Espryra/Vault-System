@@ -1,9 +1,12 @@
-import type { Player } from "@minecraft/server";
+import { type Player } from "@minecraft/server";
 import VaultConfig from "../../lib/vaults";
+import ItemInstance from "../../utils/itemBuilder/Item";
 import { VaultDatabase } from "./constants";
 import type { Vault, VaultLevel } from "./types";
 
 export default class VaultUtils {
+  private constructor() {}
+
   public static IsBlacklisted(typeId: string): boolean {
     return VaultConfig.BlacklistedItems.some((entry) => typeId.includes(entry));
   }
@@ -13,6 +16,11 @@ export default class VaultUtils {
   }
   public static GetLevel(vault: Vault): VaultLevel {
     return VaultConfig.VaultLevels[vault.upgrade_level]!;
+  }
+  public static GetMaxSize(typeId: string): number {
+    const item = new ItemInstance(typeId).Build();
+
+    return item.maxAmount;
   }
 
   public static AddBlock(
