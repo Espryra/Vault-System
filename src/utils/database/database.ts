@@ -10,7 +10,7 @@ export default class Database<T> {
 
   public constructor(
     private name: string,
-    private useCache: boolean = false,
+    private useCache: boolean = true,
     private host: Entity | World | ItemStack = world,
   ) {}
 

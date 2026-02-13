@@ -34,26 +34,28 @@ export default class VaultBreaking {
       return;
     }
 
-    const entity = dimension
-      .getEntities({ location: block.location, maxDistance: 2, closest: 1 })
-      .find((entity) => entity.typeId === "minecraft:item");
+    const entities = dimension.getEntities({
+      location: block.location,
+      maxDistance: 2,
+      type: "minecraft:item",
+    });
 
-    if (!entity) {
-      return;
+    for (const entity of entities) {
+      const item = entity.getComponent(EntityComponentTypes.Item)!.itemStack;
+
+      if (!entity.isValid) {
+        continue;
+      }
+      if (VaultUtils.IsBlacklisted(item.typeId)) {
+        continue;
+      }
+      if (level.limit < item.amount + total) {
+        continue;
+      }
+
+      entity.kill();
+
+      VaultUtils.AddBlock(player, item.typeId, item.amount);
     }
-
-    const item = entity.getComponent(EntityComponentTypes.Item)!.itemStack;
-
-    if (!entity.isValid) {
-      return;
-    }
-
-    entity.kill();
-
-    if (VaultUtils.IsBlacklisted(item.typeId)) {
-      return;
-    }
-
-    VaultUtils.AddBlock(player, item.typeId, item.amount);
   }
 }
