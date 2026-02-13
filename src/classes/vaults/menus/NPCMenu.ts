@@ -75,7 +75,6 @@ export default class VaultNPCMenu {
     }
 
     player.removeBalance(VaultConfig.VaultPrice);
-
     VaultDatabase.Set(player.id, {
       upgrade_level: 0,
       enabled: false,

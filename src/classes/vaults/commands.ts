@@ -42,27 +42,4 @@ export default class VaultCommands {
 
     VaultDatabase.Set(player.id, vault);
   }
-  private static VaultStatus(player: Player): void {
-    const vault = VaultDatabase.Get(player.id);
-
-    if (!vault) {
-      player.sendError("You do not own a vault!");
-      return;
-    }
-
-    player.sendMessage(JSON.stringify(vault, null, 2));
-  }
-  private static ClearVault(player: Player): void {
-    const vault = VaultDatabase.Get(player.id);
-
-    if (!vault) {
-      player.sendError("You do not own a vault!");
-      return;
-    }
-
-    vault.items = {};
-    VaultDatabase.Set(player.id, vault);
-
-    player.sendSuccess("Vault has been cleared!");
-  }
 }

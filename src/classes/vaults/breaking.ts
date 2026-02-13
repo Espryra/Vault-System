@@ -17,7 +17,6 @@ export default class VaultBreaking {
 
   public static OnBreak(event: PlayerBreakBlockAfterEvent): void {
     const { player, dimension, block } = event;
-
     const vault = VaultDatabase.Get(player.id);
 
     if (!vault) {
@@ -54,7 +53,6 @@ export default class VaultBreaking {
       }
 
       entity.kill();
-
       VaultUtils.AddBlock(player, item.typeId, item.amount);
     }
   }

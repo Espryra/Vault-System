@@ -3,7 +3,7 @@ import type { VaultLevel } from "../classes/vaults/types";
 const VaultConfig = {
   BlacklistedItems: [
     // Wildcards
-    "shulker",
+    "shulker_box",
     "_sword",
     "_axe",
     "_pickaxe",
@@ -47,6 +47,7 @@ const VaultConfig = {
     "minecraft:flint_and_steel",
     "minecraft:mace",
     "minecraft:shield",
+    "minecraft:elytra",
 
     // Full custom typeIds
     "bogie:bogiepack",

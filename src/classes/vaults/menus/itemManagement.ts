@@ -110,7 +110,6 @@ export default class VaultItemManagementMenu {
     const container = player.getComponent(
       EntityComponentTypes.Inventory,
     )!.container;
-
     const toGive = stacks.slice(0, container.emptySlotsCount);
     const toDrop = stacks.slice(container.emptySlotsCount);
 

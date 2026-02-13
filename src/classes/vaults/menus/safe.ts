@@ -41,7 +41,6 @@ export default class VaultSafe {
     }
 
     event.cancel = true;
-
     const vault = VaultDatabase.Get(player.id);
 
     if (!vault) {
