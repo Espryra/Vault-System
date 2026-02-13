@@ -7,6 +7,7 @@ import {
 import { ActionFormData } from "@minecraft/server-ui";
 import VaultConfig from "../../../lib/vaults";
 import { VaultDatabase } from "../constants";
+import VaultUpgradeMenu from "./upgradeMenu";
 
 export default class VaultNPCMenu {
   private constructor() {}
@@ -36,6 +37,8 @@ export default class VaultNPCMenu {
       VaultNPCMenu.CreateMenu(player);
       return;
     }
+
+    VaultUpgradeMenu.View(player);
   }
 
   private static async CreateMenu(player: Player): Promise<void> {

@@ -1,7 +1,10 @@
-import { type Player } from "@minecraft/server";
+import { type Player, type Vector3 } from "@minecraft/server";
+import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import VaultConfig from "../../lib/vaults";
+import Formatter from "../../utils/formatter";
 import ItemInstance from "../../utils/itemBuilder/Item";
 import { VaultDatabase } from "./constants";
+import VaultSafe from "./menus/safe";
 import type { Vault, VaultLevel } from "./types";
 
 export default class VaultUtils {
@@ -31,6 +34,9 @@ export default class VaultUtils {
   }
   public static GetLevel(vault: Vault): VaultLevel {
     return VaultConfig.VaultLevels[vault.upgrade_level]!;
+  }
+  public static GetNextLevel(vault: Vault): VaultLevel | undefined {
+    return VaultConfig.VaultLevels[vault.upgrade_level + 1];
   }
   public static GetMaxSize(typeId: string): number {
     const item = new ItemInstance(typeId).Build();
@@ -152,7 +158,7 @@ export default class VaultUtils {
       return;
     }
 
-    vault.items[typeId] = (vault.items[typeId] || 0) + 1;
+    vault.items[typeId] = (vault.items[typeId] || 0) + amount;
     VaultDatabase.Set(player.id, vault);
   }
 }

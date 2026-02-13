@@ -3,7 +3,7 @@ import {
   ItemStack,
   type Player,
 } from "@minecraft/server";
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
+import { ActionFormData } from "@minecraft/server-ui";
 import Formatter from "../../../utils/formatter";
 import ItemInstance from "../../../utils/itemBuilder/Item";
 import { VaultDatabase } from "../constants";
@@ -13,7 +13,7 @@ export default class VaultItemManagementMenu {
   private constructor() {}
 
   public static async MainMenu(player: Player): Promise<void> {
-    const data = await this.SearchItem(player);
+    const data = await VaultUtils.SearchItem(player);
 
     if (!data) {
       return;
@@ -59,7 +59,11 @@ export default class VaultItemManagementMenu {
       return;
     }
 
-    const toWithdrawl = await this.GetWithdrawlAmount(player, typeId, amount);
+    const toWithdrawl = await VaultUtils.GetWithdrawlAmount(
+      player,
+      typeId,
+      amount,
+    );
 
     if (toWithdrawl === undefined) {
       return;
