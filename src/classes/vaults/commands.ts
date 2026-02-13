@@ -18,18 +18,6 @@ export default class VaultCommands {
         "Toggle your vault from collecting items.",
       ),
     );
-
-    // Debugging
-    CommandHandler.RegisterCommand(
-      new Command("vaultstatus", VaultCommands.VaultStatus).SetDescription(
-        "Get the status of your vault.",
-      ),
-    );
-    CommandHandler.RegisterCommand(
-      new Command("clearvault", VaultCommands.ClearVault).SetDescription(
-        "Clear your vault.",
-      ),
-    );
   }
 
   private static Vault(player: Player): void {
