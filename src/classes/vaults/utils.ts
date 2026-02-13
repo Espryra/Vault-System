@@ -56,16 +56,16 @@ export default class VaultUtils {
 
     const items = Object.entries(vault.items);
     const form = await new ModalFormData()
-      .title("Search Item")
-      .label(`Hello, ${player.name}!\n`)
+      .title("§l§eSearch Item")
+      .label(`§fHello, §6${player.name}§f!\n`)
       .textField(
-        "Please enter the name of the item you would like to search for down below.\n",
-        "Grass Block",
+        "§7Please enter the name of the item you would like to search for down below.\n",
+        "§oGrass Block...",
         {
-          tooltip: "To see all results, just leave this blank.",
+          tooltip: "§eTo see all results, just leave this blank.",
         },
       )
-      .submitButton("Search")
+      .submitButton("§eSearch")
       .show(player);
 
     if (!form.formValues) {
@@ -93,13 +93,16 @@ export default class VaultUtils {
     filtered: [string, number][],
   ): Promise<[string, number] | undefined> {
     const form = new ActionFormData()
-      .title("Search Results")
+      .title("§l§eSearch Results")
       .body(
-        `Hello, ${player.name}!\n\nPlease select the item you would like to manage.\n`,
+        `§fHello, §g${player.name}§f!\n\n§7Please select the item you would like to manage.\n`,
       );
 
     for (const [typeId, amount] of filtered) {
-      form.button(`${Formatter.ReadableTypeId(typeId)}\n[ ${amount} ]`);
+      form.button(
+        `§e${Formatter.ReadableTypeId(typeId)}\n§7[ §g${Formatter.CommaNumber(amount)}§7 ]`,
+        "textures/ui/creative_icon",
+      );
     }
 
     const response = await form.show(player);
@@ -116,17 +119,18 @@ export default class VaultUtils {
     amount: number,
   ): Promise<number | undefined> {
     const form = await new ModalFormData()
-      .title("Withdrawl Amount")
+      .title("§l§eWithdrawl Amount")
       .label(
         [
-          `Hello, ${player.name}!\n`,
-          `You have ${amount} ${Formatter.ReadableTypeId(typeId)} in your vault!\n`,
+          `§fHello, §g${player.name}§f!\n`,
+          `§7You have §g${Formatter.CommaNumber(amount)} §e${Formatter.ReadableTypeId(typeId)} §7in your vault!\n`,
         ].join("\n"),
       )
-      .textField(`How much would you like to withdrawl?\n`, "64", {
+      .textField(`§7How much would you like to withdrawl?\n`, "§o64", {
         tooltip:
           "§cPlease note, if you enter a number bigger then the space in your inventory, the rest will be dropped on the ground!",
       })
+      .submitButton("§eSubmit")
       .show(player);
 
     if (!form.formValues) {

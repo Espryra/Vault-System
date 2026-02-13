@@ -48,7 +48,6 @@ export default class VaultSafe {
       player.sendError("You do not own a vault!");
       return;
     }
-
     if (VaultUtils.IsLocked(block.location)) {
       player.sendError("Vault is already in use!");
       return;
@@ -76,19 +75,25 @@ export default class VaultSafe {
     }
 
     const form = await new ActionFormData()
-      .title("Vault Safe")
+      .title("§l§eVault Safe")
       .body(
         [
-          `Hello, ${player.name}!\n`,
-          `Safe Space: ${container.size - container.emptySlotsCount}/${container.size} slots used.\n`,
-          "What would you like to do?\n",
+          `§8====================`,
+          `§fHello, §g${player.name}§f!`,
+          ``,
+          `§7Safe Space`,
+          `§f${container.size - container.emptySlotsCount} §8/ §c${container.size}`,
+          ``,
+          "§7What would you like to do?\n",
+          `§8====================`,
         ].join("\n"),
       )
-      .button("Deposit Items\n[ Deposit ]")
-      .button("Withdraw Items\n[ Withdraw ]")
+      .button("§eDeposit Items\n§7[ Deposit ]", "textures/ui/icon_import")
+      .button(
+        "§eWithdraw Items\n§7[ Withdraw ]",
+        "textures/items/book_writable",
+      )
       .show(player);
-
-    // AWAIT NEXT PAGE FOR LOCK.
 
     switch (form.selection) {
       case undefined:

@@ -22,15 +22,18 @@ export default class VaultItemManagementMenu {
     const [typeId, amount] = data;
     const readable = Formatter.ReadableTypeId(typeId);
     const form = await new ActionFormData()
-      .title(readable)
+      .title("§l§e" + readable)
       .body(
         [
-          `Hello, ${player.name}!\n`,
-          `You have ${amount} ${readable} inside of your vault!\n`,
-          `What would you like to do with this item?\n`,
+          `§fHello, §g${player.name}§f!\n`,
+          `§7You have §g${Formatter.CommaNumber(amount)} §e${readable} §7inside of your vault!\n`,
+          `§7What would you like to do with this item?\n`,
         ].join("\n"),
       )
-      .button("Withdrawl\n[ Withdraw Items ]")
+      .button(
+        "§eWithdrawl\n§7[ Withdraw Items ]",
+        "textures/items/book_writable",
+      )
       .show(player);
 
     switch (form.selection) {

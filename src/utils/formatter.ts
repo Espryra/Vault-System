@@ -13,4 +13,7 @@ export default class Formatter {
       .map((word) => word[0]!.toUpperCase() + word.slice(1))
       .join(" ");
   }
+  public static CommaNumber(number: number): string {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 }

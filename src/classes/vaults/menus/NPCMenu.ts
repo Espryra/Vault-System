@@ -6,6 +6,7 @@ import {
 } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import VaultConfig from "../../../lib/vaults";
+import Formatter from "../../../utils/formatter";
 import { VaultDatabase } from "../constants";
 import VaultUpgradeMenu from "./upgradeMenu";
 
@@ -43,17 +44,17 @@ export default class VaultNPCMenu {
 
   private static async CreateMenu(player: Player): Promise<void> {
     const form = await new ActionFormData()
-      .title("Creation Menu")
+      .title("§l§eCreation Menu")
       .body(
         [
-          `Hello, ${player.name}!\n`,
-          `It seems you do not own a vault as of right now, would you like to purchase one?\n`,
-          `The cost of the vault is $${VaultConfig.VaultPrice.toLocaleString()}\n`,
-          `Would you like to continue?`,
+          `§fHello, §g${player.name}§f!\n`,
+          `§7It seems you do not own a vault as of right now, would you like to purchase one?\n`,
+          `§7The cost of the vault is §a$${Formatter.CommaNumber(VaultConfig.VaultPrice)}\n`,
+          `§7Would you like to continue?`,
         ].join("\n"),
       )
-      .button(`Continue\n[ Purchase Vault ]`)
-      .button(`Cancel\n[ Exit ]`)
+      .button(`§eContinue\n§7[ Purchase Vault ]`, "textures/ui/confirm")
+      .button(`§eCancel\n§7[ Exit ]`, "textures/ui/cancel")
       .show(player);
 
     switch (form.selection) {

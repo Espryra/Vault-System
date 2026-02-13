@@ -19,16 +19,21 @@ export default class VaultMenu {
     const total = VaultUtils.GetTotal(vault);
     const level = VaultUtils.GetLevel(vault);
     const form = await new ActionFormData()
-      .title("Vault Menu")
+      .title("§l§eVault Menu")
       .body(
         [
-          `Hello, ${player.name}!\n`,
-          `Total Items: ${total}/${level.limit}\n`,
-          `What would you like to do?\n`,
+          `§8====================`,
+          `§fHello, §6${player.name}§f!`,
+          ``,
+          `§7Total Items`,
+          `§f${Formatter.CommaNumber(total)} §8/ §c${Formatter.CommaNumber(level.limit)}`,
+          ``,
+          `§7Choose an option below`,
+          `§8====================`,
         ].join("\n"),
       )
-      .button("Manage Item\n[ Search ]")
-      .button("List Items\n[ List ]")
+      .button("§eManage Item\n§7[ Search ]", "textures/ui/magnifyingGlass")
+      .button("§eList Items\n§7[ List ]", "textures/items/book_enchanted")
       .show(player);
 
     switch (form.selection) {
@@ -53,7 +58,7 @@ export default class VaultMenu {
 
     const items = Object.entries(vault.items).sort((a, b) => b[1] - a[1]);
     const form = await new ActionFormData()
-      .title("All Items")
+      .title("§l§eAll Items")
       .body(
         [
           `Hello, ${player.name}!\n`,

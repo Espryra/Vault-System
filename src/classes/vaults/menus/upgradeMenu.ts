@@ -1,7 +1,8 @@
 import type { Player } from "@minecraft/server";
-import VaultUtils from "../utils";
-import { VaultDatabase } from "../constants";
 import { ActionFormData } from "@minecraft/server-ui";
+import Formatter from "../../../utils/formatter";
+import { VaultDatabase } from "../constants";
+import VaultUtils from "../utils";
 
 export default class VaultUpgradeMenu {
   public static async View(player: Player): Promise<void> {
@@ -20,16 +21,16 @@ export default class VaultUpgradeMenu {
     }
 
     const form = await new ActionFormData()
-      .title("Upgrade Menu")
+      .title("§l§eUpgrade Menu")
       .body(
         [
-          `Hello, ${player.name}!\n`,
-          `Your next vault level upgrade will cost $${nextLevel.cost.toLocaleString()}, with the new limit of ${nextLevel.limit.toLocaleString()}.\n`,
-          `Would you like to purchase this upgrade?\n`,
+          `§fHello, §g${player.name}§f!\n`,
+          `§7Your next vault level upgrade will cost §a$${Formatter.CommaNumber(nextLevel.cost)}§7, with the new limit of §g${Formatter.CommaNumber(nextLevel.limit)}§7.\n`,
+          `§7Would you like to purchase this upgrade?\n`,
         ].join("\n"),
       )
-      .button("Continue\n[ Purchase Upgrade ]")
-      .button("Cancel\n[ Close ]")
+      .button("§eContinue\n§7[ Purchase Upgrade ]", "textures/ui/confirm")
+      .button("§eCancel\n§7[ Close ]", "textures/ui/cancel")
       .show(player);
 
     switch (form.selection) {
